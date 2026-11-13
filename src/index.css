@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    overscroll-behavior-y: contain;
+  }
+
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono-id {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.royal-game-bg {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(99, 102, 241, 0.36) 0%, transparent 52%),
+    radial-gradient(circle at 15% 80%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 85% 78%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+    linear-gradient(180deg, #1E1B5E 0%, #141142 52%, #0C092B 100%);
+}
+
+.dice-perspective {
+  perspective: 480px;
+}
+
+@keyframes dice-roll-3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+  }
+  20% {
+    transform: rotateX(135deg) rotateY(60deg) rotateZ(-20deg) scale(1.12) translateY(-6px);
+  }
+  45% {
+    transform: rotateX(270deg) rotateY(180deg) rotateZ(25deg) scale(1.16) translateY(-10px);
+  }
+  70% {
+    transform: rotateX(400deg) rotateY(300deg) rotateZ(-14deg) scale(1.08) translateY(-4px);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(0deg) scale(1);
+  }
+}
+
+@keyframes dice-settle {
+  0% {
+    transform: scale(1.14) translateY(-3px);
+  }
+  60% {
+    transform: scale(0.96) translateY(1px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes token-hop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.08); }
+}
+
+@keyframes legal-ring {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  70% { transform: scale(1.38); opacity: 0; }
+  100% { transform: scale(1.38); opacity: 0; }
+}
+
+.animate-dice-roll-3d {
+  animation: dice-roll-3d 0.38s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-dice-settle {
+  animation: dice-settle 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-token-hop {
+  animation: token-hop 0.9s ease-in-out infinite;
+}
+
+.animate-legal-ring {
+  animation: legal-ring 1.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-dice-roll-3d,
+  .animate-dice-settle,
+  .animate-token-hop,
+  .animate-legal-ring {
+    animation: none;
+  }
+}

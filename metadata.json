@@ -1,0 +1,6 @@
+{
+  "name": "Ludo Pocket",
+  "description": "Clean, lightweight 4-player Ludo board game with PeerJS P2P multiplayer, smart AI bots, saved friends list, and AdMob-ready mobile layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,14 @@
+{
+  "appId": "com.krishaapps.ludoyaari",
+  "appName": "Ludo Yaari",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "AdMob": {
+      "initializeForTesting": false
+    }
+  }
+}
