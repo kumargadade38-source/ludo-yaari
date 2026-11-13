@@ -5,10 +5,10 @@
     "": {
       "name": "react-example",
       "dependencies": {
-        "@capacitor-community/admob": "6.2.0",
-        "@capacitor/android": "6.2.1",
-        "@capacitor/cli": "6.2.1",
-        "@capacitor/core": "6.2.1",
+        "@capacitor-community/admob": "6.0.0",
+        "@capacitor/android": "6.1.2",
+        "@capacitor/cli": "6.1.2",
+        "@capacitor/core": "6.1.2",
         "@google/genai": "^2.4.0",
         "@tailwindcss/vite": "^4.3.3",
         "@vitejs/plugin-react": "^6.1.1",
@@ -35,13 +35,13 @@
     },
   },
   "packages": {
-    "@capacitor-community/admob": ["@capacitor-community/admob@6.2.0", "", { "dependencies": { "@capacitor/core": "^6.0.0" } }, "sha512-Po+FXAs4XW2LOegEo1pBssXVjblzt2LeyCiQML9Ep/GnDZooI+ZTIpnB1yU6W3dVW8iO2FENkfWM+oE8O+fNSA=="],
+    "@capacitor-community/admob": ["@capacitor-community/admob@6.0.0", "", { "dependencies": { "@capacitor/core": "^6.0.0" } }, "sha512-coM3dx9Xw2fQgMCXAvR76Mv+Fe1C6JFA8A7k+7FJ1ZbJbN/y9DW7A7bF8EBcFdTyDa2LjDRIDxmjzHZYYgDl0g=="],
 
-    "@capacitor/android": ["@capacitor/android@6.2.1", "", { "peerDependencies": { "@capacitor/core": "^6.2.0" } }, "sha512-8gd4CIiQO5LAIlPIfd5mCuodBRxMMdZZEdj8qG8m+dQ1sQ2xyemVpzHmRK8qSCHorsBUCg3D62j2cp6bEBAkdw=="],
+    "@capacitor/android": ["@capacitor/android@6.1.2", "", { "peerDependencies": { "@capacitor/core": "^6.1.0" } }, "sha512-Yh0gQDY1bgRrL25J6ecIlvvs2kF8iNSwIPXjyw6Yz9mnwYxBazF5KZbjpKtGPnJgicJhFkYGsqOkEtxrve0EoQ=="],
 
-    "@capacitor/cli": ["@capacitor/cli@6.2.1", "", { "dependencies": { "@ionic/cli-framework-output": "^2.2.5", "@ionic/utils-fs": "^3.1.6", "@ionic/utils-subprocess": "2.1.11", "@ionic/utils-terminal": "^2.3.3", "commander": "^9.3.0", "debug": "^4.3.4", "env-paths": "^2.2.0", "kleur": "^4.1.4", "native-run": "^2.0.0", "open": "^8.4.0", "plist": "^3.0.5", "prompts": "^2.4.2", "rimraf": "^4.4.1", "semver": "^7.3.7", "tar": "^6.1.11", "tslib": "^2.4.0", "xml2js": "^0.5.0" }, "bin": { "cap": "bin/capacitor", "capacitor": "bin/capacitor" } }, "sha512-JKl0FpFge8PgQNInw12kcKieQ4BmOyazQ4JGJOfEpVXlgrX1yPhSZTPjngupzTCiK3I7q7iGG5kjun0fDqgSCA=="],
+    "@capacitor/cli": ["@capacitor/cli@6.1.2", "", { "dependencies": { "@ionic/cli-framework-output": "^2.2.5", "@ionic/utils-fs": "^3.1.6", "@ionic/utils-process": "^2.1.11", "@ionic/utils-subprocess": "2.1.11", "@ionic/utils-terminal": "^2.3.3", "commander": "^9.3.0", "debug": "^4.3.4", "env-paths": "^2.2.0", "kleur": "^4.1.4", "native-run": "^2.0.0", "open": "^8.4.0", "plist": "^3.0.5", "prompts": "^2.4.2", "rimraf": "^4.4.1", "semver": "^7.3.7", "tar": "^6.1.11", "tslib": "^2.4.0", "xml2js": "^0.5.0" }, "bin": { "cap": "bin/capacitor", "capacitor": "bin/capacitor" } }, "sha512-HKCNGE0RP8U7aiEF2vg5wTivJROS8BVfu8a3yYJb1mRQvzv+czpmtHNsTWS/WukvwoxUjyjRmsNQSAACHfMTmQ=="],
 
-    "@capacitor/core": ["@capacitor/core@6.2.1", "", { "dependencies": { "tslib": "^2.1.0" } }, "sha512-urZwxa7hVE/BnA18oCFAdizXPse6fCKanQyEqpmz6cBJ2vObwMpyJDG5jBeoSsgocS9+Ax+9vb4ducWJn0y2qQ=="],
+    "@capacitor/core": ["@capacitor/core@6.1.2", "", { "dependencies": { "tslib": "^2.1.0" } }, "sha512-xFy1/4qLFLp5WCIzIhtwUuVNNoz36+V7/BzHmLqgVJcvotc4MMjswW/TshnPQaLLujEOaLkA4h8ZJ0uoK3ImGg=="],
 
     "@emnapi/core": ["@emnapi/core@2.0.0-beta.2", "", { "dependencies": { "@emnapi/wasi-threads": "2.2.0", "tslib": "^2.4.0" } }, "sha512-MzCVoWtcg4Pm2B3je5mMvYMvj3MmBKw+fU7vbsJc9/iT8ip6/eYIHo/Dsm/mr+wsHB6SEyJDuxB09Yy6r/8+4A=="],
 
@@ -109,9 +109,9 @@
 
     "@ionic/utils-fs": ["@ionic/utils-fs@3.1.7", "", { "dependencies": { "@types/fs-extra": "^8.0.0", "debug": "^4.0.0", "fs-extra": "^9.0.0", "tslib": "^2.0.1" } }, "sha512-2EknRvMVfhnyhL1VhFkSLa5gOcycK91VnjfrTB0kbqkTFCOXyXgVLI5whzq7SLrgD9t1aqos3lMMQyVzaQ5gVA=="],
 
-    "@ionic/utils-object": ["@ionic/utils-object@2.1.5", "", { "dependencies": { "debug": "^4.0.0", "tslib": "^2.0.1" } }, "sha512-XnYNSwfewUqxq+yjER1hxTKggftpNjFLJH0s37jcrNDwbzmbpFTQTVAp4ikNK4rd9DOebX/jbeZb8jfD86IYxw=="],
+    "@ionic/utils-object": ["@ionic/utils-object@2.1.6", "", { "dependencies": { "debug": "^4.0.0", "tslib": "^2.0.1" } }, "sha512-vCl7sl6JjBHFw99CuAqHljYJpcE88YaH2ZW4ELiC/Zwxl5tiwn4kbdP/gxi2OT3MQb1vOtgAmSNRtusvgxI8ww=="],
 
-    "@ionic/utils-process": ["@ionic/utils-process@2.1.10", "", { "dependencies": { "@ionic/utils-object": "2.1.5", "@ionic/utils-terminal": "2.3.3", "debug": "^4.0.0", "signal-exit": "^3.0.3", "tree-kill": "^1.2.2", "tslib": "^2.0.1" } }, "sha512-mZ7JEowcuGQK+SKsJXi0liYTcXd2bNMR3nE0CyTROpMECUpJeAvvaBaPGZf5ERQUPeWBVuwqAqjUmIdxhz5bxw=="],
+    "@ionic/utils-process": ["@ionic/utils-process@2.1.12", "", { "dependencies": { "@ionic/utils-object": "2.1.6", "@ionic/utils-terminal": "2.3.5", "debug": "^4.0.0", "signal-exit": "^3.0.3", "tree-kill": "^1.2.2", "tslib": "^2.0.1" } }, "sha512-Jqkgyq7zBs/v/J3YvKtQQiIcxfJyplPgECMWgdO0E1fKrrH8EF0QGHNJ9mJCn6PYe2UtHNS8JJf5G21e09DfYg=="],
 
     "@ionic/utils-stream": ["@ionic/utils-stream@3.1.5", "", { "dependencies": { "debug": "^4.0.0", "tslib": "^2.0.1" } }, "sha512-hkm46uHvEC05X/8PHgdJi4l4zv9VQDELZTM+Kz69odtO9zZYfnt8DkfXHJqJ+PxmtiE5mk/ehJWLnn/XAczTUw=="],
 
@@ -731,9 +731,9 @@
 
     "yauzl": ["yauzl@2.10.0", "", { "dependencies": { "buffer-crc32": "~0.2.3", "fd-slicer": "~1.1.0" } }, "sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g=="],
 
-    "@ionic/utils-process/@ionic/utils-terminal": ["@ionic/utils-terminal@2.3.3", "", { "dependencies": { "@types/slice-ansi": "^4.0.0", "debug": "^4.0.0", "signal-exit": "^3.0.3", "slice-ansi": "^4.0.0", "string-width": "^4.1.0", "strip-ansi": "^6.0.0", "tslib": "^2.0.1", "untildify": "^4.0.0", "wrap-ansi": "^7.0.0" } }, "sha512-RnuSfNZ5fLEyX3R5mtcMY97cGD1A0NVBbarsSQ6yMMfRJ5YHU7hHVyUfvZeClbqkBC/pAqI/rYJuXKCT9YeMCQ=="],
-
     "@ionic/utils-subprocess/@ionic/utils-fs": ["@ionic/utils-fs@3.1.6", "", { "dependencies": { "@types/fs-extra": "^8.0.0", "debug": "^4.0.0", "fs-extra": "^9.0.0", "tslib": "^2.0.1" } }, "sha512-eikrNkK89CfGPmexjTfSWl4EYqsPSBh0Ka7by4F0PLc1hJZYtJxUZV3X4r5ecA8ikjicUmcbU7zJmAjmqutG/w=="],
+
+    "@ionic/utils-subprocess/@ionic/utils-process": ["@ionic/utils-process@2.1.10", "", { "dependencies": { "@ionic/utils-object": "2.1.5", "@ionic/utils-terminal": "2.3.3", "debug": "^4.0.0", "signal-exit": "^3.0.3", "tree-kill": "^1.2.2", "tslib": "^2.0.1" } }, "sha512-mZ7JEowcuGQK+SKsJXi0liYTcXd2bNMR3nE0CyTROpMECUpJeAvvaBaPGZf5ERQUPeWBVuwqAqjUmIdxhz5bxw=="],
 
     "@ionic/utils-subprocess/@ionic/utils-terminal": ["@ionic/utils-terminal@2.3.3", "", { "dependencies": { "@types/slice-ansi": "^4.0.0", "debug": "^4.0.0", "signal-exit": "^3.0.3", "slice-ansi": "^4.0.0", "string-width": "^4.1.0", "strip-ansi": "^6.0.0", "tslib": "^2.0.1", "untildify": "^4.0.0", "wrap-ansi": "^7.0.0" } }, "sha512-RnuSfNZ5fLEyX3R5mtcMY97cGD1A0NVBbarsSQ6yMMfRJ5YHU7hHVyUfvZeClbqkBC/pAqI/rYJuXKCT9YeMCQ=="],
 
@@ -768,6 +768,8 @@
     "tsx/esbuild": ["esbuild@0.28.2", "", { "optionalDependencies": { "@esbuild/aix-ppc64": "0.28.2", "@esbuild/android-arm": "0.28.2", "@esbuild/android-arm64": "0.28.2", "@esbuild/android-x64": "0.28.2", "@esbuild/darwin-arm64": "0.28.2", "@esbuild/darwin-x64": "0.28.2", "@esbuild/freebsd-arm64": "0.28.2", "@esbuild/freebsd-x64": "0.28.2", "@esbuild/linux-arm": "0.28.2", "@esbuild/linux-arm64": "0.28.2", "@esbuild/linux-ia32": "0.28.2", "@esbuild/linux-loong64": "0.28.2", "@esbuild/linux-mips64el": "0.28.2", "@esbuild/linux-ppc64": "0.28.2", "@esbuild/linux-riscv64": "0.28.2", "@esbuild/linux-s390x": "0.28.2", "@esbuild/linux-x64": "0.28.2", "@esbuild/netbsd-arm64": "0.28.2", "@esbuild/netbsd-x64": "0.28.2", "@esbuild/openbsd-arm64": "0.28.2", "@esbuild/openbsd-x64": "0.28.2", "@esbuild/openharmony-arm64": "0.28.2", "@esbuild/sunos-x64": "0.28.2", "@esbuild/win32-arm64": "0.28.2", "@esbuild/win32-ia32": "0.28.2", "@esbuild/win32-x64": "0.28.2" }, "hasInstallScript": true, "bin": { "esbuild": "bin/esbuild" } }, "sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA=="],
 
     "xml2js/xmlbuilder": ["xmlbuilder@11.0.1", "", {}, "sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA=="],
+
+    "@ionic/utils-subprocess/@ionic/utils-process/@ionic/utils-object": ["@ionic/utils-object@2.1.5", "", { "dependencies": { "debug": "^4.0.0", "tslib": "^2.0.1" } }, "sha512-XnYNSwfewUqxq+yjER1hxTKggftpNjFLJH0s37jcrNDwbzmbpFTQTVAp4ikNK4rd9DOebX/jbeZb8jfD86IYxw=="],
 
     "body-parser/debug/ms": ["ms@2.0.0", "", {}, "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="],
 

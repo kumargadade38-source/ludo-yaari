@@ -1,26 +1,23 @@
-name: Build Signed Ludo Yaari Release APK
+name: Build Ludo Yaari Release APK
 
 on:
   push:
     branches:
       - main
-      - master
   workflow_dispatch:
 
 jobs:
-  build-android-apk:
-    name: Build LudoYaari-Release.apk
+  build-apk:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Setup Java JDK 17
         uses: actions/setup-java@v4
@@ -31,240 +28,22 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android Platform 34 & Build-Tools 34.0.0
-        run: |
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-34" "build-tools;34.0.0" > /dev/null
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
 
-      - name: Install Dependencies & Build Web App
-        run: |
-          npm install
-          npm run build
+      - name: Build web app
+        run: npm run build
 
-      - name: Initialize & Sync Capacitor Android Platform
-        run: |
-          rm -rf android
-          npx cap add android
-          npx cap sync android
+      - name: Prepare and sign Android project
+        run: node scripts/prepare-android.mjs
 
-      - name: Configure Manifest, Permissions, SDK 34 & Voice WebView in Android Project
-        run: |
-          node -e '
-          const fs = require("fs");
-          const path = require("path");
-
-          // 1. Ensure compileSdkVersion and targetSdkVersion are 34 in variables.gradle & app/build.gradle
-          const varsPath = path.join("android", "variables.gradle");
-          if (fs.existsSync(varsPath)) {
-            let vars = fs.readFileSync(varsPath, "utf8");
-            vars = vars.replace(/compileSdkVersion\s*=\s*\d+/g, "compileSdkVersion = 34");
-            vars = vars.replace(/targetSdkVersion\s*=\s*\d+/g, "targetSdkVersion = 34");
-            fs.writeFileSync(varsPath, vars, "utf8");
-          }
-
-          const appGradlePath = path.join("android", "app", "build.gradle");
-          if (fs.existsSync(appGradlePath)) {
-            let gradle = fs.readFileSync(appGradlePath, "utf8");
-            gradle = gradle.replace(/compileSdk(?:Version)?\s*=?\s*(?:rootProject\.ext\.compileSdkVersion|\d+)/g, "compileSdk 34");
-            gradle = gradle.replace(/targetSdk(?:Version)?\s*=?\s*(?:rootProject\.ext\.targetSdkVersion|\d+)/g, "targetSdkVersion 34");
-            fs.writeFileSync(appGradlePath, gradle, "utf8");
-          }
-
-          // 2. Patch AndroidManifest.xml with required permissions and AdMob App ID
-          const manifestPath = path.join("android", "app", "src", "main", "AndroidManifest.xml");
-          let manifest = fs.readFileSync(manifestPath, "utf8");
-
-          const permissions = [
-            "android.permission.INTERNET",
-            "android.permission.RECORD_AUDIO",
-            "android.permission.MODIFY_AUDIO_SETTINGS",
-            "android.permission.ACCESS_NETWORK_STATE",
-            "android.permission.WAKE_LOCK"
-          ];
-
-          for (const perm of permissions) {
-            if (!manifest.includes(`android:name="${perm}"`)) {
-              manifest = manifest.replace(
-                /<application\b/,
-                `    <uses-permission android:name="${perm}" />\n\n    <application`
-              );
-            }
-          }
-
-          if (!manifest.includes("android.hardware.microphone")) {
-            manifest = manifest.replace(
-              /<application\b/,
-              `    <uses-feature android:name="android.hardware.microphone" android:required="false" />\n\n    <application`
-            );
-          }
-
-          const adMobMeta = `<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-8592915239178695~4656930184" />`;
-          if (manifest.includes("com.google.android.gms.ads.APPLICATION_ID")) {
-            manifest = manifest.replace(
-              /<meta-data\s+android:name="com\.google\.android\.gms\.ads\.APPLICATION_ID"[^>]*\/>/,
-              adMobMeta
-            );
-          } else {
-            manifest = manifest.replace(
-              /<\/application>/,
-              `        ${adMobMeta}\n    </application>`
-            );
-          }
-
-          fs.writeFileSync(manifestPath, manifest, "utf8");
-
-          // 3. Configure MainActivity.java to grant WebView RESOURCE_AUDIO_CAPTURE for PeerJS Voice Chat
-          const mainActivityPath = path.join(
-            "android", "app", "src", "main", "java",
-            "com", "krishaapps", "ludoyaari", "MainActivity.java"
-          );
-
-          const mainActivityJava = `package com.krishaapps.ludoyaari;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.webkit.PermissionRequest;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.BridgeWebChromeClient;
-
-public class MainActivity extends BridgeActivity {
-    private static final int AUDIO_PERMISSION_REQUEST_CODE = 1001;
-    private PermissionRequest pendingAudioPermissionRequest;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (this.bridge != null && this.bridge.getWebView() != null) {
-            this.bridge.getWebView().setWebChromeClient(new BridgeWebChromeClient(this.bridge) {
-                @Override
-                public void onPermissionRequest(final PermissionRequest request) {
-                    boolean requestsAudio = false;
-                    for (String resource : request.getResources()) {
-                        if (PermissionRequest.RESOURCE_AUDIO_CAPTURE.equals(resource)) {
-                            requestsAudio = true;
-                            break;
-                        }
-                    }
-
-                    if (!requestsAudio) {
-                        super.onPermissionRequest(request);
-                        return;
-                    }
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                        ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        pendingAudioPermissionRequest = request;
-                        ActivityCompat.requestPermissions(
-                            MainActivity.this,
-                            new String[] {
-                                Manifest.permission.RECORD_AUDIO,
-                                Manifest.permission.MODIFY_AUDIO_SETTINGS
-                            },
-                            AUDIO_PERMISSION_REQUEST_CODE
-                        );
-                    } else {
-                        runOnUiThread(() ->
-                            request.grant(new String[] { PermissionRequest.RESOURCE_AUDIO_CAPTURE })
-                        );
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(
-        int requestCode,
-        @NonNull String[] permissions,
-        @NonNull int[] grantResults
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == AUDIO_PERMISSION_REQUEST_CODE && pendingAudioPermissionRequest != null) {
-            final PermissionRequest req = pendingAudioPermissionRequest;
-            pendingAudioPermissionRequest = null;
-            boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-            runOnUiThread(() -> {
-                if (granted) {
-                    req.grant(new String[] { PermissionRequest.RESOURCE_AUDIO_CAPTURE });
-                } else {
-                    req.deny();
-                }
-            });
-        }
-    }
-}
-`;
-          fs.mkdirSync(path.dirname(mainActivityPath), { recursive: true });
-          fs.writeFileSync(mainActivityPath, mainActivityJava, "utf8");
-          '
-
-      - name: Build Unsigned Release APK
+      - name: Assemble release APK
         working-directory: android
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+        run: chmod +x gradlew && ./gradlew assembleRelease --no-daemon
 
-      - name: Sign Release APK (v1 + v2 Signatures for Amazon Appstore)
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          mkdir -p dist-apk
-          UNSIGNED_APK=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
-          if [ -z "$UNSIGNED_APK" ]; then
-            echo "Error: Unsigned release APK not found."
-            exit 1
-          fi
-
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | base64 -d > ludo-yaari-release.jks
-            STORE_PASS="$KEYSTORE_PASSWORD"
-            ALIAS_NAME="${KEY_ALIAS:-ludoyaari}"
-            KEY_PASS="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
-          else
-            STORE_PASS="LudoYaariRelease2026"
-            ALIAS_NAME="ludoyaari"
-            KEY_PASS="LudoYaariRelease2026"
-            keytool -genkeypair -v \
-              -keystore ludo-yaari-release.jks \
-              -alias "$ALIAS_NAME" \
-              -keyalg RSA \
-              -keysize 2048 \
-              -validity 10000 \
-              -storepass "$STORE_PASS" \
-              -keypass "$KEY_PASS" \
-              -dname "CN=Ludo Yaari, OU=Mobile Games, O=Krisha Apps, L=Mumbai, ST=MH, C=IN"
-          fi
-
-          BUILD_TOOLS_DIR="$ANDROID_HOME/build-tools/34.0.0"
-          if [ ! -d "$BUILD_TOOLS_DIR" ]; then
-            BUILD_TOOLS_DIR=$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -mindepth 1 | sort -V | tail -n 1)
-          fi
-
-          "$BUILD_TOOLS_DIR/zipalign" -p -f 4 "$UNSIGNED_APK" dist-apk/LudoYaari-aligned.apk
-          "$BUILD_TOOLS_DIR/apksigner" sign \
-            --ks ludo-yaari-release.jks \
-            --ks-key-alias "$ALIAS_NAME" \
-            --ks-pass "pass:$STORE_PASS" \
-            --key-pass "pass:$KEY_PASS" \
-            --v1-signing-enabled true \
-            --v2-signing-enabled true \
-            --out dist-apk/LudoYaari-Release.apk \
-            dist-apk/LudoYaari-aligned.apk
-
-          "$BUILD_TOOLS_DIR/apksigner" verify --verbose dist-apk/LudoYaari-Release.apk
-
-      - name: Upload LudoYaari-Release.apk Artifact
+      - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
-          name: LudoYaari-Release
-          path: dist-apk/LudoYaari-Release.apk
+          name: LudoYaari-Release-APK
+          path: android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
