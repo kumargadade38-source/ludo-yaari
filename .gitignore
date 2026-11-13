@@ -2,6 +2,7 @@ node_modules/
 build/
 dist/
 dist-apk/
+release-artifacts/
 android/
 coverage/
 .DS_Store

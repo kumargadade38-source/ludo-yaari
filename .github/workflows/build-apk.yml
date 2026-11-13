@@ -41,9 +41,13 @@ jobs:
         working-directory: android
         run: chmod +x gradlew && ./gradlew assembleRelease --no-daemon
 
-      - name: Upload release APK
+      - name: Collect APK and store icons
+        run: cp android/app/build/outputs/apk/release/*.apk release-artifacts/LudoYaari-Release.apk
+
+      - name: Upload release APK and store icons
         uses: actions/upload-artifact@v4
         with:
           name: LudoYaari-Release-APK
-          path: android/app/build/outputs/apk/release/*.apk
+          path: release-artifacts/
           if-no-files-found: error
+
