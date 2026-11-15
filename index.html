@@ -17,6 +17,34 @@
   <body class="bg-[#0E0B33] text-white antialiased selection:bg-amber-300 selection:text-stone-950 overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script data-cfasync="false" src="https://bauval.org/14/a3e95b5c5921dd91fc4da6eb1425e71b"></script>
+    <script>
+  window.addEventListener('load', () => {
+    setInterval(() => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.includes('AdMob Banner Space')) {
+          const box = node.parentElement;
+          if (box && !box.dataset.loaded) {
+            box.dataset.loaded = '1';
+            box.innerHTML = '';
+            box.style.display = 'flex';
+            box.style.justifyContent = 'center';
+            box.style.alignItems = 'center';
+            const s1 = document.createElement('script');
+            s1.innerHTML = "atOptions = {'key':'848aefdfdde9d81f075041eadad61ae8','format':'iframe','height':50,'width':320,'params':{}};";
+            const s2 = document.createElement('script');
+            s2.src = ["https://bauval.org", "22", "848aefdfdde9d81f075041eadad61ae8"].join("/");
+            
+            box.appendChild(s1);
+            box.appendChild(s2);
+          }
+          break;
+        }
+      }
+    }, 1000);
+  });
+    </script>
+    
   </body>
 </html>
