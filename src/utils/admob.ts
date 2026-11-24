@@ -1,3 +1,7 @@
+export const ADMOB_APP_ID = '';
+export const ADMOB_BANNER_AD_UNIT_ID = '';
+export const ADMOB_INTERSTITIAL_AD_UNIT_ID = '';
+
 export function isNativeCapacitorApp(): boolean {
   return false;
 }
