@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Ludo Yaari</title>
     <meta name="description" content="Play 3D Ludo online with friends or smart bots directly in your browser." />
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = ['https://integration', 'gamepix', 'com/sdk/v3/gamepix', 'sdk', 'js'].join('.');
+        s.onload = function () {
+          if (window.GamePix && typeof window.GamePix.loaded === 'function') {
+            window.GamePix.loaded();
+          }
+        };
+        document.head.appendChild(s);
+      })();
+    </script>
     <link rel="preconnect" href="https://googleapis.com" />
     <link rel="preconnect" href="https://gstatic.com" crossorigin />
     <link href="https://googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
